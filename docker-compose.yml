@@ -11,8 +11,6 @@ services:
       MYSQL_USER: 'budget'
       MYSQL_PASSWORD: 'test'
       MYSQL_RANDOM_ROOT_PASSWORD: 1
-    ports:
-      - 3306:3306
     command: --default-authentication-plugin=mysql_native_password
 
   app:
@@ -21,6 +19,8 @@ services:
       - BUDGET_SETUP
     volumes:
       - .:/var/www
+    links:
+      - database
     ports:
       - 8080:80
-    command: ./docker_boot.sh
+    command: bash -c "chmod -R +x ./; ./docker_boot.sh;"
